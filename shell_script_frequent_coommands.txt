@@ -1,0 +1,155 @@
+$0	The filename of the current script.
+$n	These variables correspond to the arguments with which a script was invoked. Here n is a positive decimal number corresponding to the position of an argument (the first argument is $1, the second argument is $2, and so on).
+$#	The number of arguments supplied to a script.
+$*	All the arguments are double quoted. If a script receives two arguments, $* is equivalent to $1 $2.
+$@	All the arguments are individually double quoted. If a script receives two arguments, $@ is equivalent to $1 $2.
+$?	The exit status of the last command executed.
+$$	The process number of the current shell. For shell scripts, this is the process ID under which they are executing.
+$!	The process number of the last background command.
+
+
+**********Array*******
+NAME[0]="Zara"
+NAME[1]="Qadir"
+echo "First Index: ${NAME[0]}"
+echo "Second Index: ${NAME[1]}"
+
+echo "${#files[@]}"  ## gives lengh
+
+
+declare -a eoc_1_lines=()
+
+##looping through an array
+# count=0
+# for name in ${names[*]}
+# do
+	# echo ${names[$count]}
+	# count=`expr $count + 1`
+# done
+#below code will do the same as above
+# count=0
+# for name in ${names[@]}
+# do
+	# echo ${names[$count]}
+	# count=`expr $count + 1`
+# done
+
+
+***************loop through command************
+echo "hello"
+list=`ls -l`
+# echo "$list"
+while read -r p; do
+  echo "$p***"
+done <<< "$list"
+
+
+another way:
+
+for PGPfile in `find ${inDir}/ -maxdepth 1 -iname ${anyFiles}`; do
+
+	PGPfile=${PGPfile##*/}                      # remove path
+	thisFile=`echo ${PGPfile} | tr [:lower:] [:upper:]`
+
+
+	if [[ ${thisFile} =~ TD_RENNT ]]; then
+		  incomingFiles[i]=${PGPfile}
+		  i=`expr $i + 1`              
+	elif [[ ${thisFile} =~ TD_NOTE ]]; then
+		  incomingFiles[i]=${PGPfile}
+		  i=`expr $i + 1`
+	elif [[ ${thisFile} =~ SDB_LATE ]]; then
+		  incomingFiles[i]=${PGPfile}
+		  i=`expr $i + 1`
+	fi      
+done
+
+
+@all_letter_data  =  `ls ${dir}file/*`;
+
+foreach my $file_name ( @all_letter_data ) {
+   chomp $file_name;
+  
+   if    ( $file_name =~ /LN_LATE/         ) { &catFile( "$file_name", "${dir}${cid}dl001.dat" ); }
+   elsif ( $file_name =~ /LN_RPCHG/        ) { &catFile( "$file_name", "${dir}${cid}dl002.dat" ); }
+#       elsif ( $file_name =~ /DP[-|_]12ODN/    ) { &catFile( "$file_name", "${dir}${cid}dl004.dat" ); }
+   elsif ( $file_name =~ /PS[_|-]DPUI/     ) { &catFile( "$file_name", "${dir}${cid}dl005.dat" ); }
+#       elsif ( $file_name =~ /DP[-|_]OVDFT/    ) { &catFile( "$file_name", "${dir}${cid}dl006.dat" ); }
+   elsif ( $file_name =~ /REGD_N/          ) { &catFile( "$file_name", "${dir}${cid}dl007.dat" ); }
+   elsif ( $file_name =~ /MM[-|_]OPDR/     ) { &catFile( "$file_name", "${dir}${cid}dl008.dat" ); }
+   elsif ( $file_name =~ /RT_MDNT/         ) { &catFile( "$file_name", "${dir}${cid}dl009.dat" ); }
+   elsif ( $file_name =~ /SDB_LATE/        ) { &catFile( "$file_name", "${dir}${cid}dl010.dat" ); }
+   elsif ( $file_name =~ /TD_NOTE/         ) { &catFile( "$file_name", "${dir}${cid}dl011.dat" ); }
+   elsif ( $file_name =~ /TD_RENNT/        ) { &catFile( "$file_name", "${dir}${cid}dl012.dat" ); }
+   elsif ( $file_name =~ /LN_MATNT/        ) { &catFile( "$file_name", "${dir}${cid}dl013.dat" ); }
+   elsif ( $file_name =~ /LN_OVDNT/        ) { &catFile( "$file_name", "${dir}${cid}dl014.dat" ); }
+   elsif ( $file_name =~ /DP[_|-]MODSC/    ) { &catFile( "$file_name", "${dir}${cid}dl015.dat" ); }
+   
+   if ( $? ) { &close_out( "ERROR: Can't create .dat for ${file_name}. Please confirm!\n", 1 ); }
+}
+
+******************save command output in array**************
+   supp_file_array=`grep -iP "^MC_BY_ACCT:" ${home_ins}/insert/${cid}${app}.ins | cut -d " " -f2`
+   for supp_file in ${supp_file_array[@]}
+   do
+      echo "MC_BY_ACCT in ${home_ins}/insert/${cid}${app}.ins: ${supp_file}"
+      if [ ${supp_file} = "${d_dir}/${cid}/${cid}${app}_supp.txt" ]
+      then
+           supp_file_flg=1
+      fi
+   done 
+
+**************************mathematical operator****************
+echo $(( 2 * 5 ))
+
+**************************relational numeric operator****************
+Relational - Bourne Shell supports following relational operators which are specific to numeric values. 
+These operators would not work for string values unless their value is numeric.
+For example, following operators would work to check a relation between 10 and 20 as well as in between "10" and "20" but not in between "ten" and "twenty".
+-eq,-ne,-gt,-lt,-ge,-le
+
+**************************relational string operator****************
+=,!=,-z,-n
+if [ "$a" ]
+then
+ echo "it will not enter because $a doesn't exist or length 0"
+fi 
+
+
+
+**************************boolean operator****************
+!,-o, -a
+if [ ! 10 -eq 1 ]; then echo "What"; fi
+
+**************************file operator****************
+-b file	Checks if file is a block special file if yes then condition becomes true.	[ -b $file ] is false.
+-c file	Checks if file is a character special file if yes then condition becomes true.	[ -c $file ] is false.
+-d file	Check if file is a directory if yes then condition becomes true.	[ -d $file ] is not true.
+-f file	Check if file is an ordinary file as opposed to a directory or special file if yes then condition becomes true.	[ -f $file ] is true.
+-g file	Checks if file has its set group ID (SGID) bit set if yes then condition becomes true.	[ -g $file ] is false.
+-k file	Checks if file has its sticky bit set if yes then condition becomes true.	[ -k $file ] is false.
+-p file	Checks if file is a named pipe if yes then condition becomes true.	[ -p $file ] is false.
+-t file	Checks if file descriptor is open and associated with a terminal if yes then condition becomes true.	[ -t $file ] is false.
+-u file	Checks if file has its set user id (SUID) bit set if yes then condition becomes true.	[ -u $file ] is false.
+-r file	Checks if file is readable if yes then condition becomes true.	[ -r $file ] is true.
+-w file	Check if file is writable if yes then condition becomes true.	[ -w $file ] is true.
+-x file	Check if file is execute if yes then condition becomes true.	[ -x $file ] is true.
+-s file	Check if file has size greater than 0 if yes then condition becomes true.	[ -s $file ] is true.
+-e file	Check if file exists. Is true even if file is a directory but exists.	[ -e $file ] is true.
+
+
+*******************************read file line by line *****************
+count=0
+
+
+
+while read LINE
+do
+let count++
+echo "$count $LINE"
+done < $FILENAME 
+
+
+************************error redirection file******************
+$ sh test.sh 2> >(tee file>&1) | tee file1
+
